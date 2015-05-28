@@ -1,15 +1,15 @@
 class Bar {
   float x; //moving X value
   float y; //moving Y value
-  float innerX;
-  float innerY;
-  float targetX;
-  float targetY;
-  float iniX; //return X value
-  float iniY; //return Y value
-  float easing = 0.2;
-  boolean reset = true;
-  boolean activate = false;
+  float innerX; //Starting x value
+  float innerY; //Starting y value
+  float targetX; //Ending x value
+  float targetY; //Ending y value
+  float iniX; //initial X value
+  float iniY; //initial Y value
+  float easing = 0.2; //easing speed
+  boolean reset = true; //Reset the object's behaviour
+  boolean activate = false; //Activate the object's behaviour
   
   Bar (float _x, float _y, float _targetX, float _targetY) {
     x = _x;
@@ -22,6 +22,8 @@ class Bar {
   
   void display() {
     
+    //Ease the Inner point to the moving point
+    //else - reset the values to allow it to activate again
     if (dist(innerX, innerY, x, y) > 1.0) {
       innerX += (x - innerX) * easing;
       innerY += (y - innerY) * easing;
@@ -33,8 +35,9 @@ class Bar {
       reset = true;
     }
     
-    //Ease the line out to the max value
-    //will stop when 
+    //Ease the moving point to the Ending point
+    //Inner points remain stationary until moving point is less than the distance
+    //Sets the 'reset' to false to complete its animation
     if (activate) {
         if (dist(x, y, targetX, targetY) > 1.0) {
           x += (targetX - x) * easing;
@@ -50,9 +53,8 @@ class Bar {
     line(innerX, innerY, x , y);
   }
   
-  //depending on the audio levels, display the Bar
+  //depending on the audio levels, run the bar
   void level(float level) {
-    
     if (reset) {
       if (level >= 0.6) {
         activate = true;
