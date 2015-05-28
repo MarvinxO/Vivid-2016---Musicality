@@ -9,9 +9,9 @@ Minim minim;
 AudioPlayer player;
 Bar bar[];
 
-float angle = 0;
-float speed = 0.001;
-float delta;
+float angle = 0; //angle of rotation
+float speed = 0.001; //speed of rotations
+float delta; //angle in radians - used to points in a circle
 float inner;
 float outer;
 int points;
@@ -23,10 +23,11 @@ void setup() {
   background(0);
 
   minim = new Minim(this);
+  //Insert .mp3 file here
   player = minim.loadFile("Love Never Felt So Good.mp3", 360);
   player.play();
   
-  print(player.bufferSize());
+  //print(player.bufferSize());
   
   points = 360;
   delta = radians(360/points);
@@ -34,6 +35,7 @@ void setup() {
   outer = width/4;
   bar = new Bar[points];
   
+  //Assign initial point and target point
   for (int i = 0; i < points; i ++) {
       
       stroke(i, 255, 255, 100);
