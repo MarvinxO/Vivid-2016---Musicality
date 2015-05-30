@@ -10,7 +10,7 @@ AudioPlayer player;
 Bar bar[];
 
 float angle = 0;
-float speed = 0.01;
+float speed = 0.001;
 float delta;
 float inner;
 float outer;
@@ -29,7 +29,7 @@ void setup() {
   print(player.bufferSize());
   
   points = 360;
-  delta = 360/points;
+  delta = radians(360/points);
   inner = width/8;
   outer = width/4;
   bar = new Bar[points];
@@ -56,11 +56,8 @@ void draw() {
   angle += speed;
   
   translate(width/2, height/2);
-  rotateY(angle);
+  rotateZ(angle);
   for (int i = 0; i < points; i ++) {
-     for (int j = 0; j < points; j += 12) {
-      rotateY(j);
-    }
     stroke(i, 255, 255);
     bar[i].display();
     bar[i].level(abs(player.left.get(i)));
